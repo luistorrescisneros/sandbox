@@ -3,12 +3,14 @@ name: publish
 on:
   pull_request:
     branches: [main]
-    types: [closed]
+    #types: [closed]
 
 jobs:
   publish:
     runs-on: [windows-latest]
-    if: github.event.pull_request.merged == true
     steps:
+      - name: Build
+        run: echo "Project built"
       - name: Publish
+        if: github.event.pull_request.merged == true && github.event.pull_request.types.closed == true
         run: echo "Package published"
