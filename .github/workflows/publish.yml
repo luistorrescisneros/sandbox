@@ -5,7 +5,9 @@ on:
     branches: [main]
     types: [opened, closed]
   push:
-    branches: ['**']
+    tags-ignore: ['**']
+# Note that branches: ['**'] disable workflow when pushing tags
+# another way is defining tags-ignore: ['**]
 
 jobs:
   publish:
