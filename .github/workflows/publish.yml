@@ -3,7 +3,8 @@ name: publish
 on:
   pull_request:
     branches: [main]
-    types: [opened, edited, closed]
+    types: [opened, closed]
+  push:
 
 jobs:
   publish:
