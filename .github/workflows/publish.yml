@@ -7,8 +7,8 @@ on:
 
 jobs:
   publish:
-  runs-on: [windows-latest]
-  if: github.event.pull_request.merged == true
-  steps:
-    - name: Publish
-      run: echo "Package published"
+    runs-on: [windows-latest]
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Publish
+        run: echo "Package published"
