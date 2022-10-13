@@ -12,5 +12,5 @@ jobs:
       - name: Build
         run: echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true && github.event.pull_request.types == "closed"
+        if: github.event.pull_request.merged == true && github.event.pull_request.types == closed
         run: echo "Package published"
