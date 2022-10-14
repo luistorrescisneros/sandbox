@@ -203,7 +203,7 @@ if [ -z "$NEEDSTAG" ]; then
         # Tag the commit.
         if [[ "$DRYRUN" -eq 0 ]]; then
             conditional_echo "-- Tagging commit. ($LASTCOMMIT)"
-            git tag -a $NEWTAG -m"$RELEASEDATE: Release $VNUM1.$VNUM2.$VNUM3" -m"$RELEASENOTES" $LASTCOMMIT
+            git tag -a $NEWTAG -m"$RELEASEDATE: Release $VNUM1.$VNUM2.$VNUM3.$VNUM4" -m"$RELEASENOTES" $LASTCOMMIT
             conditional_echo "- Pushing release to $REMOTE"
             # Push up the tag
             git push $REMOTE $NEWTAG "${GITPARAMS[@]}"
