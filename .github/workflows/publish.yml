@@ -20,6 +20,7 @@ on:
 # The above  "on:"" triggers workflows twice after closing a PR. One for PR and one for push.
 # The only issue with above approach is that it triggers the workflow twice after succesful PR
 # But it allows developer to trigger workflow while making changes
+# bash tag-release.sh --branch publish --type build
 
 jobs:
   publish:
@@ -30,7 +31,7 @@ jobs:
       - name: Publish
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
         run: |
-          bash tag-release.sh --branch publish --type build
+          cat tag-release.sh
           echo "Package published" 
       - name: GitHub Context
         env:
