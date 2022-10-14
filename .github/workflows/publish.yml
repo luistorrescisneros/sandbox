@@ -4,13 +4,14 @@ env:
   publish-branch: main
 
 on:
-  pull_request:
-    branches: [main]
-    types: [opened, closed]
   push:
     branches: ['**']
     tags-ignore: ['**']
-    
+
+#  pull_request:
+#    branches: [main]
+#    types: [opened, closed]
+#
 # Note that branches: ['**'] disables workflow when pushing tags
 # The above  "on:"" triggers workflows twice after closing a PR. One for PR and one for push.
 # The only issue with above approach is that it triggers the workflow twice after succesful PR
