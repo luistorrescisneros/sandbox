@@ -11,6 +11,7 @@ on:
     branches: ['feature/**']
     tags-ignore: ['**']
 
+
 #  pull_request:
 #    branches: [main]
 #    types: [opened, closed]
@@ -27,7 +28,7 @@ jobs:
       - name: Build
         run: echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature') == true
+        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
         run: echo "Package published" 
       - name: GitHub Context
         env:
