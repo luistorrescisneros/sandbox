@@ -1,14 +1,20 @@
 name: publish
 
+env:
+  publish-branch: main
+
 on:
   pull_request:
     branches: [main]
     types: [opened, closed]
   push:
     branches: ['**']
+    tags-ignore: ['**']
     
 # Note that branches: ['**'] disables workflow when pushing tags
-# another way is defining tags-ignore: ['**]
+# The above  "on:"" triggers workflows twice after closing a PR. One for PR and one for push.
+# The only issue with above approach is that it triggers the workflow twice after succesful PR
+# But it allows developer to trigger workflow while making changes
 
 jobs:
   publish:
@@ -17,5 +23,9 @@ jobs:
       - name: Build
         run: echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true
-        run: echo "Package published"
+        if: github.event.pull_request.merged == true && contains(github.head_ref, 'feature')
+        run: echo "Package published (should not happen)"
+      - name: GitHub Context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
