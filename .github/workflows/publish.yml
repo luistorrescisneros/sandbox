@@ -24,7 +24,7 @@ jobs:
         run: echo "Project built"
       - name: Publish
         if: github.event.pull_request.merged == true && github.base_ref == ${{env.publish-branch}} && github.head_ref == feature
-        run: echo "Package published"
+        run: echo "Package published" (should not happen)
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
