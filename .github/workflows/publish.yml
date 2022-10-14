@@ -1,7 +1,7 @@
 name: publish
 
 env:
-  publish-branch: main
+  publish-branch: publish
 
 on:
   pull_request:
