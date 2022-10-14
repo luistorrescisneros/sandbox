@@ -36,7 +36,7 @@ jobs:
       - name: Publish
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
         run: |
-          cat README.md
+          bash tag-release.sh --branch publish --type build
           echo "Package published" 
       - name: GitHub Context
         env:
