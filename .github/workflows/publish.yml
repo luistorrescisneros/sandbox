@@ -28,8 +28,8 @@ jobs:
     steps:
       - name: Build
         run: |
+          dir 
           cat README.md
-          ls
           echo "Project built"
       - name: Publish
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
