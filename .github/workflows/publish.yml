@@ -26,12 +26,17 @@ jobs:
   publish:
     runs-on: [windows-latest]
     steps:
+      - name: Checkout source code 
+        uses: actions/checkout@v3
       - name: Build
-        run: echo "Project built"
+        run: |
+          dir 
+          cat README.md
+          echo "Project built"
       - name: Publish
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
         run: |
-          cat README.md
+          bash tag-release.sh --branch publish --type build
           echo "Package published" 
       - name: GitHub Context
         env:
