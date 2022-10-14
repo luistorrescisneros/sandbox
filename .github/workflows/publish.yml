@@ -4,8 +4,11 @@ env:
   publish-branch: main
 
 on:
+  pull_request:
+    branches: [main]
+    types: [closed]
   push:
-    branches: ['**']
+    branches: ['feature/**']
     tags-ignore: ['**']
 
 #  pull_request:
