@@ -36,10 +36,11 @@ jobs:
           cat README.md
           echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
+        if: github.event.pull_request.merged == true && github.head_ref == main
         run: |
           ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
-          git describe
+          git describe -outvariable version
+          echo "$version"
           echo "Package published" 
       - name: GitHub Context
         env:
