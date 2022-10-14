@@ -8,7 +8,7 @@ on:
     branches: [main]
     types: [closed]
   push:
-    branches: ['feature/**']
+    branches: ['feature/**', 'KLDKB**']
     tags-ignore: ['**']
 
 
