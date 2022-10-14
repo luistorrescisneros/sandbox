@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true && github.base_ref == ${env.publish-branch} && github.head_ref == feature
+        if: github.event.pull_request.merged == true && github.base_ref == ${{env.publish-branch}} && github.head_ref == feature
         run: echo "Package published"
       - name: GitHub Context
         env:
