@@ -1,15 +1,16 @@
 name: publish
 
 env:
-  publish-branch: main
+  publish-branch: publish
 
 on:
   pull_request:
-    branches: [main]
+    branches: ['publish']
     types: [closed]
   push:
-    branches: ['feature/**']
+    branches: ['feature/**', 'KLDKB**']
     tags-ignore: ['**']
+
 
 #  pull_request:
 #    branches: [main]
@@ -27,7 +28,7 @@ jobs:
       - name: Build
         run: echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature') == true
+        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
         run: echo "Package published" 
       - name: GitHub Context
         env:
