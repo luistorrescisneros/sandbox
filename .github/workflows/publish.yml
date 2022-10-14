@@ -28,6 +28,7 @@ jobs:
       - name: Contains test
         if: startsWith(${{github.head_ref}}, "feature")
         run: |
+          echo "${{startsWith(${{github.head_ref}}, "feature")}}"
           echo "${{github.head_ref}}"
           echo "Contains a feature string"
 
