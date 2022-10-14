@@ -26,10 +26,11 @@ jobs:
         if: github.event.pull_request.merged == true
         run: echo "Package published (should not happen)" 
       - name: Contains test
-        if: contains(${{github.head_ref}}, 'feature')
+        if: startsWith(${{github.head_ref}}, 'feature')
         run: |
           echo "${{github.head_ref}}"
           echo "Contains a feature string"
+
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
