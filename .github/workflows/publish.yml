@@ -8,7 +8,7 @@ on:
     branches: ['**']
     
 # Note that branches: ['**'] disables workflow when pushing tags
-# another way is defining tags-ignore: ['**]
+# The above  "on:"" triggers workflows twice after closing a PR. One for PR and one for push.
 
 jobs:
   publish:
@@ -19,3 +19,7 @@ jobs:
       - name: Publish
         if: github.event.pull_request.merged == true
         run: echo "Package published"
+      - name: GitHub Context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
