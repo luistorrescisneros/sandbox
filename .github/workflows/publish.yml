@@ -38,7 +38,7 @@ jobs:
       - name: Publish
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
         run: |
-          bash tag-release.sh --branch publish --type build
+          ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
           git describe
           echo "Package published" 
       - name: GitHub Context
