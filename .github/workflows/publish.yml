@@ -29,7 +29,9 @@ jobs:
         run: echo "Project built"
       - name: Publish
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'main') == true
-        run: echo "Package published" 
+        run: |
+          bash tag-release.sh --branch publish --type build
+          echo "Package published" 
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
