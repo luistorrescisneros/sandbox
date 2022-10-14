@@ -39,9 +39,9 @@ jobs:
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
         run: |
           ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
-          git describe -outvariable version
+          echo "::set-output name=version::$(git describe)"
           echo "$version"
-          echo "Package published" 
+          cat conanpkg-info.yml 
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
