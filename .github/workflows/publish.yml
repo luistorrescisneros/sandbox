@@ -23,8 +23,8 @@ jobs:
       - name: Build
         run: echo "Project built"
       - name: Publish
-        if: github.event.pull_request.merged == true && contains(github.head_ref, 'feature')
-        run: echo "Package published (should not happen)"
+        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'feature') == true
+        run: echo "Package published" 
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
