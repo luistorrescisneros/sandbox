@@ -28,6 +28,7 @@ jobs:
     steps:
       - name: Build
         run: |
+          cat README.md
           ls
           echo "Project built"
       - name: Publish
