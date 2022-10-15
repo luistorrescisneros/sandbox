@@ -1,4 +1,4 @@
 ### My README
 
 new version
-new feature 1
+new feature 2
