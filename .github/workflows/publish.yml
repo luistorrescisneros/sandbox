@@ -1,8 +1,5 @@
 name: publish
 
-env:
-  publish-branch: publish
-
 on:
   pull_request:
     branches: ['publish']
@@ -39,20 +36,6 @@ jobs:
           dir 
           cat README.md
           echo "Project built"
-# echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
-# steps.get_image.outputs.image_id == ''
-#- name: Set color
-#  id: random-color-generator
-#  run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
-#- name: Get color
-#  run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
-#- name: Version by Echo
-#  run: echo "$(git version)"
-#- name: Output Git-Version
-#  id: get_version 
-#  run: echo "::set-output name=VERSION::$(git version)"
-#- name: Get Version
-#  run: echo "version is ${{steps.get_version.outputs.VERSION}}"
       - name: Publish
         id: published_version
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
@@ -67,9 +50,6 @@ jobs:
           cat conanpkg-info.yml
           (Get-Content -Path .\conanpkg-info.yml) | ForEach-Object {$_ -Replace '0.0.0.0', "${{steps.published_version.outputs.VERSION}}"} | Set-Content -Path .\conanpkg-info.yml
           cat conanpkg-info.yml
-#(Get-Content -Path .\Notice.txt) |
-#    ForEach-Object {$_ -Replace 'Warning', 'Caution'} |
-#        Set-Content -Path .\Notice.txt
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
@@ -79,7 +59,6 @@ jobs:
     runs-on: [self-hosted, torresl-1, Windows]
     needs: [publish]
     steps:
-      steps:
       - name: Stop Docker-Container
         run: docker stop container-id${{github.run_id}}
       - name: Delete Docker-Container
@@ -87,3 +66,20 @@ jobs:
       - name: Delete Docker-Image
         run: docker rmi sandbox-build:test
       
+# echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
+# steps.get_image.outputs.image_id == ''
+#- name: Set color
+#  id: random-color-generator
+#  run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
+#- name: Get color
+#  run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+#- name: Version by Echo
+#  run: echo "$(git version)"
+#- name: Output Git-Version
+#  id: get_version 
+#  run: echo "::set-output name=VERSION::$(git version)"
+#- name: Get Version
+#  run: echo "version is ${{steps.get_version.outputs.VERSION}}"
+#(Get-Content -Path .\Notice.txt) |
+#    ForEach-Object {$_ -Replace 'Warning', 'Caution'} |
+#        Set-Content -Path .\Notice.txt
