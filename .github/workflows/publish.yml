@@ -42,25 +42,26 @@ jobs:
 #  run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
 #- name: Get color
 #  run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
-      - name: Version by Echo
-        run: echo "$(git version)"
-      - name: Output Git-Version
-        id: get_version 
-        run: echo "::set-output name=VERSION::$(git version)"
-      - name: Get Version
-        run: echo "version is ${{steps.get_version.outputs.VERSION}}"
+      #- name: Version by Echo
+      #  run: echo "$(git version)"
+      #- name: Output Git-Version
+      #  id: get_version 
+      #  run: echo "::set-output name=VERSION::$(git version)"
+      #- name: Get Version
+      #  run: echo "version is ${{steps.get_version.outputs.VERSION}}"
       - name: Publish
+        id: published_version
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
         run: |
           ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
-          echo "version=$(git describe)" >> $GITHUB_ENV
-          echo "${{env.version}}"
+          echo "::set-output name=VERSION::$(git describe)"
           cat conanpkg-info.yml 
+      - name: Print version
+        if: github.event.pull_request.merged == true && github.head_ref == 'main'
+        run: |
+          echo "Published Version is${{steps.published_version.outputs.VERSION}}"
       - name: GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Print version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main'
-        run: |
-          echo "${{env.version}}"
+      
