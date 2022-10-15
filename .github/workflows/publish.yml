@@ -37,7 +37,7 @@ jobs:
           cat README.md
           echo "Project built"
       - name: Describe tag
-        run: git --version
+        run: git describe
       - name: Publish
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
         run: |
