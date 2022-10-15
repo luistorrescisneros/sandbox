@@ -46,7 +46,7 @@ jobs:
         run: echo "$(git version)"
       - name: Output Git-Version
         id: get_version 
-        run: echo "VERSION=myversion" >> $GITHUB_OUTPUT
+        run: echo "::set-output name=VERSION::$(git version)"
       - name: Get Version
         run: echo "version is ${{steps.get_version.outputs.NO-VERSION}}"
       - name: Publish
