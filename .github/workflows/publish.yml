@@ -37,11 +37,16 @@ jobs:
           echo "Project built"
 # echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
 # steps.get_image.outputs.image_id == ''
+#- name: Set color
+#  id: random-color-generator
+#  run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
+#- name: Get color
+#  run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
       - name: Version by Echo
         run: echo "$(git version)"
       - name: Output Git-Version
         id: get_version 
-        run: echo "VERSION=v1.0.0.0" >> $GITHUB_OUTPUT
+        run: echo "VERSION=myversion" >> $GITHUB_OUTPUT
       - name: Get Version
         run: echo "version is ${{steps.get_version.outputs.VERSION}}"
       - name: Publish
