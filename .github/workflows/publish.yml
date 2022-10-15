@@ -39,7 +39,7 @@ jobs:
 # steps.get_image.outputs.image_id == ''
       - name: Output Git-Version
         id: get_version 
-        run: echo "name=version::$(git version)" >> $GITHUB_OUTPUT
+        run: echo "version=$(git version)" >> $GITHUB_OUTPUT
       - name: Get Version
         run: echo "version is ${{steps.get_version.outputs.version}}"
       - name: Publish
