@@ -21,7 +21,6 @@ on:
 # The only issue with above approach is that it triggers the workflow twice after succesful PR
 # But it allows developer to trigger workflow while making changes
 # bash tag-release.sh --branch publish --type build
-# echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
 
 jobs:
   publish:
@@ -36,8 +35,13 @@ jobs:
           dir 
           cat README.md
           echo "Project built"
-      - name: Describe tag
-        run: git version
+# echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
+# steps.get_image.outputs.image_id == ''
+      - name: Output Git-Version
+        id: get_version 
+        run: echo" version=::$(git version)" >> $GITHUB_OUTPUT
+      - name: Get Version
+        run: echo "version is ${{steps.get_version.outputs.version}}"
       - name: Publish
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
         run: |
