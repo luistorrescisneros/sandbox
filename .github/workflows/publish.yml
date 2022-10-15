@@ -48,7 +48,7 @@ jobs:
         id: get_version 
         run: echo "VERSION=myversion" >> $GITHUB_OUTPUT
       - name: Get Version
-        run: echo "version is ${{steps.get_version.outputs.VERSION}}"
+        run: echo "version is ${{steps.get_version.outputs.NO-VERSION}}"
       - name: Publish
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
         run: |
