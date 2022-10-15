@@ -29,7 +29,11 @@ jobs:
       - name: Checkout source code 
         uses: actions/checkout@v3
         with:
-          token: ${{secrets.SANDBOX_TOKEN}} 
+          token: ${{secrets.SANDBOX_TOKEN}}
+      - name: Build Docker-Image
+        run: docker build . --no-cache --file docker/build/Dockerfile --tag sandbox-build:test 
+      - name: Start Docker-Container 
+        run: docker run -d -it --name container-id${{github.run_id}}
       - name: Build
         run: |
           dir 
@@ -61,7 +65,7 @@ jobs:
         run: |
           echo "Published Version is ${{steps.published_version.outputs.VERSION}}"
           cat conanpkg-info.yml
-          (Get-Content -Path .\conanpkg-info.yml) | ForEach-Object {$_ -Replace 'v0.0.0.0', "${{steps.published_version.outputs.VERSION}}"} | Set-Content -Path .\conanpkg-info.yml
+          (Get-Content -Path .\conanpkg-info.yml) | ForEach-Object {$_ -Replace '0.0.0.0', "${{steps.published_version.outputs.VERSION}}"} | Set-Content -Path .\conanpkg-info.yml
           cat conanpkg-info.yml
 #(Get-Content -Path .\Notice.txt) |
 #    ForEach-Object {$_ -Replace 'Warning', 'Caution'} |
@@ -70,4 +74,16 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+
+  clean:
+    runs-on: [self-hosted, torresl-1, Windows]
+    needs: [publish]
+    steps:
+      steps:
+      - name: Stop Docker-Container
+        run: docker stop container-id${{github.run_id}}
+      - name: Delete Docker-Container
+        run: docker container rm container-id${{github.run_id}}
+      - name: Delete Docker-Image
+        run: docker rmi sandbox-build:test
       
