@@ -41,9 +41,9 @@ jobs:
         run: echo "$(git version)"
       - name: Output Git-Version
         id: get_version 
-        run: echo "version=$(git version)" >> $GITHUB_OUTPUT
+        run: echo "VERSION=v1.0.0.0" >> $GITHUB_OUTPUT
       - name: Get Version
-        run: echo "version is ${{steps.get_version.outputs.version}}"
+        run: echo "version is ${{steps.get_version.outputs.VERSION}}"
       - name: Publish
         if: github.event.pull_request.merged == true && github.head_ref == 'main'
         run: |
