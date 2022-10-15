@@ -37,6 +37,8 @@ jobs:
           echo "Project built"
 # echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
 # steps.get_image.outputs.image_id == ''
+      - name: Version by Echo
+        run: echo "$(git version)"
       - name: Output Git-Version
         id: get_version 
         run: echo "version=$(git version)" >> $GITHUB_OUTPUT
