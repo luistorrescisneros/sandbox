@@ -21,7 +21,7 @@ on:
 
 jobs:
   publish:
-    runs-on: [self-hosted, torresl-2, Windows]
+    runs-on: [self-hosted, torresl-1, Windows]
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v3
