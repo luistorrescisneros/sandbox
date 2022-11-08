@@ -31,8 +31,8 @@ jobs:
       # run: docker version
       #- name: Build Docker-Image Out of Service
       #  run: docker build . --no-cache --file docker/build/Dockerfile --tag sandbox-build:test 
-      - name: Start Docker-Container 
-        run: docker run -d -it --name container-id${{github.run_id}}
+      #- name: Start Docker-Container 
+      #  run: docker run -d -it --name container-id${{github.run_id}}
       - name: Build
         run: |
           dir 
