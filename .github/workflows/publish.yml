@@ -29,8 +29,8 @@ jobs:
           token: ${{secrets.SANDBOX_TOKEN}}
       - name: Test Docker
         run: docker version
-      - name: Build Docker-Image
-        run: docker build . --no-cache --file docker/build/Dockerfile --tag sandbox-build:test 
+      #- name: Build Docker-Image
+      #  run: docker build . --no-cache --file docker/build/Dockerfile --tag sandbox-build:test 
       - name: Start Docker-Container 
         run: docker run -d -it --name container-id${{github.run_id}}
       - name: Build
@@ -40,13 +40,13 @@ jobs:
           echo "Project built"
       - name: Publish
         id: published_version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main'
+        if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
         run: |
           ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
           echo "::set-output name=VERSION::$(git describe)"
           cat conanpkg-info.yml 
       - name: Print version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main'
+        if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
         run: |
           echo "Published Version is ${{steps.published_version.outputs.VERSION}}"
           cat conanpkg-info.yml
