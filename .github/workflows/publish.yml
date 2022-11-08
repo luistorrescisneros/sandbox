@@ -27,8 +27,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{secrets.SANDBOX_TOKEN}}
-      - name: Test Docker
-        run: docker version
+      #- name: Test Docker
+      # run: docker version
       #- name: Build Docker-Image Out of Service
       #  run: docker build . --no-cache --file docker/build/Dockerfile --tag sandbox-build:test 
       - name: Start Docker-Container 
