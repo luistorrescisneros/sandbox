@@ -1,8 +1,5 @@
 name: publish
 
-env:
-  publish-branch: publish
-
 on:
   pull_request:
     branches: ['publish']
@@ -29,12 +26,48 @@ jobs:
       - name: Checkout source code 
         uses: actions/checkout@v3
         with:
-          token: ${{secrets.SANDBOX_TOKEN}} 
+          token: ${{secrets.SANDBOX_TOKEN}}
+      #- name: Test Docker
+      # run: docker version
+      #- name: Build Docker-Image Out of Service
+      #  run: docker build . --no-cache --file docker/build/Dockerfile --tag sandbox-build:test 
+      #- name: Start Docker-Container 
+      #  run: docker run -d -it --name container-id${{github.run_id}}
       - name: Build
         run: |
           dir 
           cat README.md
           echo "Project built"
+      - name: Publish
+        id: published_version
+        if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
+        run: |
+          ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
+          echo "::set-output name=VERSION::$(git describe)"
+          cat conanpkg-info.yml 
+      - name: Print version
+        if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
+        run: |
+          echo "Published Version is ${{steps.published_version.outputs.VERSION}}"
+          cat conanpkg-info.yml
+          (Get-Content -Path .\conanpkg-info.yml) | ForEach-Object {$_ -Replace '0.0.0.0', "${{steps.published_version.outputs.VERSION}}"} | Set-Content -Path .\conanpkg-info.yml
+          cat conanpkg-info.yml
+      - name: GitHub Context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+  #clean:
+  #  runs-on: [self-hosted, torresl-1, Windows]
+  #  needs: [publish]
+  #  steps:
+  #    - name: Stop Docker-Container
+  #      run: docker stop container-id${{github.run_id}}
+  #    - name: Delete Docker-Container
+  #      run: docker container rm container-id${{github.run_id}}
+  #    - name: Delete Docker-Image
+  #      run: docker rmi sandbox-build:test
+      
 # echo "::set-output name=image_id::$(docker images -q ${{env.tools-image}})"
 # steps.get_image.outputs.image_id == ''
 #- name: Set color
@@ -49,25 +82,6 @@ jobs:
 #  run: echo "::set-output name=VERSION::$(git version)"
 #- name: Get Version
 #  run: echo "version is ${{steps.get_version.outputs.VERSION}}"
-      - name: Publish
-        id: published_version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main'
-        run: |
-          ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
-          echo "::set-output name=VERSION::$(git describe)"
-          cat conanpkg-info.yml 
-      - name: Print version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main'
-        run: |
-          echo "Published Version is ${{steps.published_version.outputs.VERSION}}"
-          cat conanpkg-info.yml
-          (Get-Content -Path .\conanpkg-info.yml) | ForEach-Object {$_ -Replace 'v0.0.0.0', "${{steps.published_version.outputs.VERSION}}"} | Set-Content -Path .\conanpkg-info.yml
-          cat conanpkg-info.yml
 #(Get-Content -Path .\Notice.txt) |
 #    ForEach-Object {$_ -Replace 'Warning', 'Caution'} |
 #        Set-Content -Path .\Notice.txt
-      - name: GitHub Context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      
