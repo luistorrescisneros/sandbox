@@ -43,7 +43,7 @@ jobs:
         #if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
         run: |
           ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch feature/conatains --type build
-          echo "VERSION=$(git describe)" >> $GITHUB_OUTPUT
+          echo "{VERSION}={$(git describe)}" >> $GITHUB_OUTPUT
           cat conanpkg-info.yml
         #echo "::set-output name=VERSION::$(git describe)" 
       - name: Print version
