@@ -40,13 +40,13 @@ jobs:
           echo "Project built"
       - name: Publish
         id: published_version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
+        #if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
         run: |
           ."C:\Program Files\Git\bin\bash.exe" tag-release.sh --branch publish --type build
           echo "::set-output name=VERSION::$(git describe)"
           cat conanpkg-info.yml 
       - name: Print version
-        if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
+        #if: github.event.pull_request.merged == true && github.head_ref == 'main' && startsWith(github.base_ref,'publish')
         run: |
           echo "Published Version is ${{steps.published_version.outputs.VERSION}}"
           cat conanpkg-info.yml
