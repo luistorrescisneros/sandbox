@@ -57,6 +57,9 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: GitHub Workspace
+        run: |
+          echo "$GITHUB_WORKSPACE"
 
   #clean:
   #  runs-on: [self-hosted, torresl-1, Windows]
