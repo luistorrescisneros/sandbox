@@ -62,9 +62,9 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
       - name: GitHub Workspace
         run: |
-          $pathToScript=$($Env:GITHUB_WORKSPACE + "${{env.HELLO_SCRIPT}}")
+          $pathToScript=$($Env:GITHUB_WORKSPACE + "\${{env.HELLO_SCRIPT}}")
           echo "$pathToScript"
-        #."$pathToScript"
+          ."$pathToScript"
 
   #clean:
   #  runs-on: [self-hosted, torresl-1, Windows]
