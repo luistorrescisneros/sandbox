@@ -8,6 +8,9 @@ on:
     branches: ['feature/**', 'KLDKB**', 'main']
     tags-ignore: ['**']
 
+env:
+  HELLO_SCRIPT: docker\scripts\hello.ps1
+
 # trigger
 #  pull_request:
 #    branches: [main]
@@ -59,7 +62,9 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
       - name: GitHub Workspace
         run: |
-          echo "$Env:GITHUB_WORKSPACE"
+          $pathToScript=$($GITHUB_WORKSPACE + ${{env.HELLO_SCRIPT}})
+          echo "$pathToScript"
+          ."$pathToScript"
 
   #clean:
   #  runs-on: [self-hosted, torresl-1, Windows]
