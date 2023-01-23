@@ -59,7 +59,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
       - name: GitHub Workspace
         run: |
-          echo "$GITHUB_WORKSPACE"
+          echo "$Env:GITHUB_WORKSPACE"
 
   #clean:
   #  runs-on: [self-hosted, torresl-1, Windows]
