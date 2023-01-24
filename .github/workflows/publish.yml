@@ -64,8 +64,8 @@ jobs:
       - name: GitHub Workspace
         run: |
           $pathToScript=$($Env:GITHUB_WORKSPACE + "\${{env.FETCH_TAG_SCRIPT}}")
-          $output = $(."$pathToScript" feature/conatains) 
-          echo "$output[-1]"
+          $output = $(."$pathToScript" feature/conatains)[-1] 
+          echo "$output"
 
 
   #clean:
