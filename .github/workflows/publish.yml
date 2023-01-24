@@ -10,6 +10,7 @@ on:
 
 env:
   HELLO_SCRIPT: docker\scripts\hello.ps1
+  FETCH_TAG_SCRIPT: docker\scripts\fetchTag.ps1
 
 # trigger
 #  pull_request:
@@ -62,7 +63,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
       - name: GitHub Workspace
         run: |
-          $pathToScript=$($Env:GITHUB_WORKSPACE + "\${{env.HELLO_SCRIPT}}")
+          $pathToScript=$($Env:GITHUB_WORKSPACE + "\${{env.FETCH_TAG_SCRIPT}}")
           echo "$pathToScript"
           ."$pathToScript"
 
