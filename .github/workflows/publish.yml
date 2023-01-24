@@ -66,6 +66,7 @@ jobs:
         run: |
           $fetchTagScript=$($Env:GITHUB_WORKSPACE + "\${{env.FETCH_TAG_SCRIPT}}")
           echo "$fetchTagScript"
+          ."$fetchTagScript" feature/conatains
         #$tag = $(."$fetchTagScript" feature/conatains)[-1] 
         #echo "VERSION=$tag" >> $Env:GITHUB_OUTPUT
       #- name: Print new tag
