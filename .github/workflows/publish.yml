@@ -64,8 +64,8 @@ jobs:
       - name: GitHub Workspace
         run: |
           $pathToScript=$($Env:GITHUB_WORKSPACE + "\${{env.FETCH_TAG_SCRIPT}} feature/conatains" )
-          echo "$pathToScript"
-        #."$pathToScript"
+          echo "Path to script: $pathToScript"
+          ."$pathToScript"
 
   #clean:
   #  runs-on: [self-hosted, torresl-1, Windows]
