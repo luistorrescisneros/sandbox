@@ -65,7 +65,7 @@ jobs:
         id: new_version 
         run: |
           $fetchTagScript=$($Env:GITHUB_WORKSPACE + "\${{env.FETCH_TAG_SCRIPT}}")
-          $tag = $(."$pathToScript" feature/conatains)[-1] 
+          $tag = $(."$fetchTagScript" feature/conatains)[-1] 
           echo "VERSION=$tag" >> $Env:GITHUB_OUTPUT
       - name: Print new tag
         run: |
